@@ -51,6 +51,11 @@
                     </fieldset>
                     <fieldset class="field_container list">
                         <legend> <img src="img/list.png"> List Users </legend>
+                
+                
+                        <div style="padding: 1em; text-align: right;">
+                            <input class="frm_input" type="text" placeholder="Search" ng-model="search">
+                        </div>
 
                         <table class="table_list" cellspacing="2" cellpadding="0">
                             <tr class="bg_h">
@@ -59,7 +64,7 @@
                                 <th>Age</th>
                                 <th>Options</th>
                             </tr>
-                            <tr ng-repeat="post in posts">
+                            <tr ng-repeat="post in posts | filter: search">
                                 <td>{{ post.full_name }}</td>
                                 <td>{{ post.email }}</td>
                                 <td>{{ post.age }}</td>
