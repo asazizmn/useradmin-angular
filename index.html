@@ -15,6 +15,7 @@
         
         <!-- AngularJS CDN -->
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>-->
         
         <!-- AngularJS UI-Router CDN --> 
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
@@ -54,6 +55,14 @@
                 
                 
                         <div style="padding: 1em; text-align: right;">
+                            <select ng-model="itemsPerPage" class="frm_input">
+                                <option>1</option>
+                                <option>5</option>
+                                <option>10</option>
+                                <option>20</option>
+                                <option>50</option>
+                                <option>100</option>
+                            </select>
                             <input class="frm_input" type="text" placeholder="Search" ng-model="search">
                         </div>
 
@@ -64,11 +73,21 @@
                                 <th>Age</th>
                                 <th>Options</th>
                             </tr>
-                            <tr ng-repeat="post in posts | filter: search">
+                    
+                            <!-- please note that only angularjs version 1.4 and above offer limitTo: limit: begin,
+                                and in the context of 'limitTo: limit: begin', 'begin' actually refers to the array index, 
+                                hence for first page you need to start at '0' -->
+                            <!--tr ng-repeat="post in posts | filter: search | limitTo: itemsPerPage : currentPage-1 * itemsPerPage"-->
+                            
+                            <!-- so here we are simply using our own custom filter instead -->
+                            <tr ng-repeat="post in posts | filter: search | limit: currentPage : itemsPerPage">
                                 <td>{{ post.full_name }}</td>
                                 <td>{{ post.email }}</td>
                                 <td>{{ post.age }}</td>
                                 <td><a href="#" class="delete_m" onclick=""><img src="img/delete.png"> Delete</a></td>
+                            </tr>
+                            <tr>
+                                <div pagination="" page="currentPage" on-select-page="setPage( page )" boundary-links="true" total-items="filteredItems" items-per-page="itemsPerPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div-->
                             </tr>
                         </table>
 

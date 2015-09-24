@@ -89,4 +89,39 @@ app.factory( 'posts', function( $http )
 app.controller( 'NewsListCtrl', function( $scope, posts )
 {
     $scope.posts = posts.posts;
+    
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = 2;
+    $scope.filteredItems = $scope.posts.length; // this will initially show all items
+    $scope.totalItems = $scope.posts.length;
+    
+    $scope.setPage = function( pageNo ) 
+    {
+        $scope.currentPage = pageNo;
+    };
+});
+
+
+
+//////////////////////////////////////////////////
+// Custom Filters
+//////////////////////////////////////////////////
+
+// returns a 'sliced' version of the original dataset,
+// given the current page and the items you want on that page
+app.filter( 'limit', function() 
+{
+    return function( input, currentPage, itemsPerPage ) 
+    {
+        // 'start' is the number to be converted to integer
+        // '10' here represents the decimal numeral system commonly used by humans
+        currentPage = parseInt( currentPage, 10 );
+        itemsPerPage = parseInt( itemsPerPage, 10 );
+
+        // extract the input array from provided start limit to end limit 
+        // but please note that slice returns from 'index' up to but not including the end,
+        // hence there is a need to add '-1' and '+1'
+        // finally return the newly subsectioned array
+        return input.slice( ( currentPage - 1 ) * itemsPerPage, currentPage * itemsPerPage );
+    };
 });
