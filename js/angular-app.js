@@ -90,15 +90,62 @@ app.controller( 'NewsListCtrl', function( $scope, posts )
 {
     $scope.posts = posts.posts;
     
+    // default values of the following variables,
+    // that will potentially change in the app
     $scope.currentPage = 1;
-    $scope.itemsPerPage = 2;
-    $scope.filteredItems = $scope.posts.length; // this will initially show all items
-    $scope.totalItems = $scope.posts.length;
+    $scope.itemsPerPage = 5;
+    
+    // gives the currently available number of posts
+//    $scope.filteredItems = $scope.posts.length;
+
+    // total number of items, including onces that are filtered out
+//    $scope.totalItems = $scope.posts.length;
+    
     
     $scope.setPage = function( pageNo ) 
     {
         $scope.currentPage = pageNo;
     };
+    
+    
+    $scope.pageCount = function()
+    {
+        // round the result upwards
+        return Math.ceil( $scope.posts.length / $scope.itemsPerPage );
+    };
+    
+    
+    // if current page is first page, set disabled class
+    $scope.prevPageDisabled = function()
+    {
+        return $scope.currentPage === 1;
+    };
+    
+    
+    // if current page is last page, set disabled class
+    $scope.nextPageDisabled = function()
+    {
+        return $scope.currentPage === $scope.pageCount();
+    };
+    
+    
+    $scope.prevPage = function()
+    {
+        if ( $scope.currentPage > 1 )
+        {
+            $scope.currentPage--;
+        }
+    };
+    
+    
+    $scope.nextPage = function()
+    {
+        if ( $scope.currentPage < $scope.pageCount() )
+        {
+            $scope.currentPage++;
+        }
+    };
+    
 });
 
 

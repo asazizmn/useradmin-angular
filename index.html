@@ -21,6 +21,11 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
         <script src="js/angular-app.js"></script>
         
+        <style>
+            .pagination { text-align: center; border-top: 1px solid whitesmoke; padding-top: 1.5em; }
+            .pagination div { display: inline-block; width: 5em; }
+        </style>
+        
     </head>
     <body ng-app="useradmin-angular">
         
@@ -57,11 +62,11 @@
                         <div style="padding: 1em; text-align: right;">
                             <select ng-model="itemsPerPage" class="frm_input">
                                 <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
                                 <option>5</option>
                                 <option>10</option>
-                                <option>20</option>
-                                <option>50</option>
-                                <option>100</option>
                             </select>
                             <input class="frm_input" type="text" placeholder="Search" ng-model="search">
                         </div>
@@ -79,17 +84,24 @@
                                 hence for first page you need to start at '0' -->
                             <!--tr ng-repeat="post in posts | filter: search | limitTo: itemsPerPage : currentPage-1 * itemsPerPage"-->
                             
-                            <!-- so here we are simply using our own custom filter instead -->
+                            <!-- so here we are simply using our own custom filter instead >
+                            <tr ng-repeat="post in posts | filter: search"-->
                             <tr ng-repeat="post in posts | filter: search | limit: currentPage : itemsPerPage">
                                 <td>{{ post.full_name }}</td>
                                 <td>{{ post.email }}</td>
                                 <td>{{ post.age }}</td>
                                 <td><a href="#" class="delete_m" onclick=""><img src="img/delete.png"> Delete</a></td>
                             </tr>
-                            <tr>
-                                <div pagination="" page="currentPage" on-select-page="setPage( page )" boundary-links="true" total-items="filteredItems" items-per-page="itemsPerPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></div-->
-                            </tr>
                         </table>
+                        
+                        <div class="pagination">
+                            <div ng-hide="prevPageDisabled()">
+                                <a href ng-click="prevPage()">« Prev</a>
+                            </div>
+                            <div ng-hide="nextPageDisabled()">
+                              <a href ng-click="nextPage()">Next »</a>
+                            </div>
+                        </div>
 
                     </fieldset>
                 </div><!-- content -->    
