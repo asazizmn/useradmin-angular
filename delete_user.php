@@ -8,7 +8,7 @@
  */
 
 
-include('config.php');
+include('cnfg.php');
 $pdo = connect();
 
 // deleting a user using PDO with try/catch to escape the exceptions
